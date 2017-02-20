@@ -1,22 +1,39 @@
 var express = require('express');
 
+
+var jwt = require('jsonwebtoken');
 var router = express.Router();
 var Message = require('../models/message.js');
 
 router.get('/',function(req, res, next){
     Message.find()
         .exec(function(err, messages){
+            console.log("No se que carajo pasa cuando ejecuta");
             if (err){
+                console.log("No se que carajo pasa cuando ejecuta.... Exploto cuando ejecuta");
                 return res.status(500).json({
                     title: 'An error occurred',
                     error: err
                 });
             }
+            console.log("No se que carajo pasa, todo va bien... supuestamente");
             res.status(200).json({
                 messages: 'Success',
                 obj: messages
             });
         });
+});
+
+router.use('/', function(req, res, next){
+    jwt.verify(req.query.token, 'secret', function(err, decoded){
+        if (err){
+            return res.status(401).json({
+                title: 'Not Authenticated',
+                error : err
+            });
+        }
+        next();
+    });
 });
 
 router.post('/', function(req, res, next){

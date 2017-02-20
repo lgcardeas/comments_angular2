@@ -31,7 +31,7 @@ export class MessageInputComponent implements OnInit{
                     error => console.error(error)
                 );
         }
-      form.reset();
+      form.resetForm();
   }
 
   onClear(form: NgForm){
@@ -47,7 +47,4 @@ export class MessageInputComponent implements OnInit{
                 }
             );
   }
-
-
-
 }
