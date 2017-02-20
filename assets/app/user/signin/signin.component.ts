@@ -32,7 +32,7 @@ export class SignInComponent implements OnInit{
             this.myForm = new FormGroup({
                 email: new FormControl(null, [
                     Validators.required,
-                    Validators.pattern('([a-z0-9_-])+@([a-z_-])+.([a-z])+{2,4}')
+                    Validators.pattern('([a-z0-9_-])+@([a-z_-])+\\.([a-z]{2,4})')
                 ]),
                 password: new FormControl(null, Validators.required)
             });
