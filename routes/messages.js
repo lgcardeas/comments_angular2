@@ -66,6 +66,7 @@ router.post('/', function(req, res, next){
 });
 
 router.patch('/:id', function(req, res, next){
+    var decode = jwt.decode(req.query.token);
     Message.findById(req.params.id, function(err, message){
         if (err){
             return res.status(500).json({
@@ -78,6 +79,12 @@ router.patch('/:id', function(req, res, next){
                 title: 'No message found!',
                 error: {message: 'No message found'}
             });
+        }
+        if (message.user != decode.user._id){
+                return res.status(401).json({
+                    title: 'Not Authenticated',
+                    error : {mesage: 'User does not match'}
+                });
         }
         message.content = req.body.content;
         message.save(function(err, result){
@@ -96,6 +103,7 @@ router.patch('/:id', function(req, res, next){
 });
 
 router.delete('/:id', function(req, res, next){
+    var decode = jwt.decode(req.query.token);
     Message.findById(req.params.id, function(err, message){
         if (err){
             return res.status(500).json({
@@ -108,6 +116,12 @@ router.delete('/:id', function(req, res, next){
                 title: 'Message No Found',
                 error: {message: 'Message No Found'}
             });
+        }
+        if (message.user != decode.user._id){
+                return res.status(401).json({
+                    title: 'Not Authenticated',
+                    error : {mesage: 'User does not match'}
+                });
         }
         message.remove(function(err, result){
             if (err){
