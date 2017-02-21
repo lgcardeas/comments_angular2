@@ -9,7 +9,7 @@ var schema = new Schema({
 
 schema.post('remove',  function(message){
     User.findById(message.user, function(err, user){
-        user.message.pull(message);
+        user.messages.pull(message);
         user.save();
     });
 });

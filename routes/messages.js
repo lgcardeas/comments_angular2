@@ -9,15 +9,12 @@ var User = require("../models/user");
 router.get('/',function(req, res, next){
     Message.find()
         .exec(function(err, messages){
-            console.log("No se que carajo pasa cuando ejecuta");
             if (err){
-                console.log("No se que carajo pasa cuando ejecuta.... Exploto cuando ejecuta");
                 return res.status(500).json({
                     title: 'An error occurred',
                     error: err
                 });
             }
-            console.log("No se que carajo pasa, todo va bien... supuestamente");
             res.status(200).json({
                 messages: 'Success',
                 obj: messages
@@ -59,7 +56,7 @@ router.post('/', function(req, res, next){
                 });
             }
             user.messages.push(result);
-            user,save();
+            user.save();
             res.status(201).json({
                 title: 'Saved Message',
                 obj: result
